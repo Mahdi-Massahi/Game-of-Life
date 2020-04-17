@@ -6,8 +6,8 @@ class Graphics:
     def __init__(self, row, col, box_width):
 
         self.margin = [5, 5, 5, 5]
-        self.width = box_width*row + self.margin[1] + self.margin[3]
-        self.height = box_width*col + self.margin[0] + self.margin[2]
+        self.width = box_width*col + self.margin[1] + self.margin[3]
+        self.height = box_width*row + self.margin[0] + self.margin[2]
         self.row = row
         self.col = col
         self.box_width = box_width

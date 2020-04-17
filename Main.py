@@ -1,19 +1,13 @@
 import random
 from Graphics import *
 from time import sleep
-
-def initialize(_row, _column, prob=0.2):
-    _world = []
-    for i in range(_row):
-        _ = []
-        for j in range(_column):
-            _.append(1 if random.randint(0, 100) / 100 < prob else 0)
-        _world.append(_)
-    return _world
+from Patterns import *
 
 
-def evolution(_world, _row, _column):
+def evolution(_world):
     neg = []
+    _row = len(_world)
+    _column = len(_world[0])
     for i in range(_row):
         _ = []
         for j in range(_column):
@@ -30,29 +24,41 @@ def evolution(_world, _row, _column):
 
     for i in range(_row):
         for j in range(_column):
+            # Any live cell with fewer than two live neighbours, dies
+            if _world[i][j] == 1 and neg[i][j] < 2:
+                _world[i][j] = 0
+
+            # Any live cell with more than three live neighbours, dies
+            if _world[i][j] == 1 and neg[i][j] > 3:
+                _world[i][j] = 0
+
+            # Any live cell with two or three live neighbours lives, unchanged, to the next generation.
             if _world[i][j] == 1 and (neg[i][j] == 2 or neg[i][j] == 3):
                 _world[i][j] = 1
-            elif _world[i][j] == 0 and neg[i][j] == 3:
+
+            # Any dead cell with exactly three live neighbours will come to life.
+            if _world[i][j] == 0 and neg[i][j] == 3:
                 _world[i][j] = 1
-            else:
-                _world[i][j] = 0
+
     return _world
 
 
-def run(draw_every=1, delay=0.1, prob=0.2):
-    world = initialize(row, column, prob)
-    ui.draw(world, 1)
-    for ev in range(1, 500):
-        world = evolution(world, row, column)
+def run(init, draw_every = 1, delay = 0.1, gen = 500):
+    ui.draw(init, 1)
+    for ev in range(1, gen):
+        init = evolution(init)
         print("\rEvolution:\t", ev, sep = "", end = "")
         if ev % draw_every == 0:
             sleep(delay)
-            ui.draw(world, ev)
+            ui.draw(init, ev)
 
     ui.wait()
 
 
-row, column = 150, 150
-cell_width = 4
-ui = Graphics(row, column, cell_width)
-run(50, 0.2, 0.2)
+world = pulsar # random_world(30, 30, prob = 0.5)
+ui = Graphics(len(world), len(world[0]), box_width=20)
+
+run(init = world,
+    draw_every = 1,
+    delay = 0.5,
+    gen = 20)
