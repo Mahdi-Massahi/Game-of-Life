@@ -55,10 +55,10 @@ def run(init, draw_every = 1, delay = 0.1, gen = 500):
     ui.wait()
 
 
-world = pulsar # random_world(30, 30, prob = 0.5)
-ui = Graphics(len(world), len(world[0]), box_width=20)
+world = flower # random_world(60, 60, prob = 0.5)
+ui = Graphics(len(world), len(world[0]), box_width=12)
 
 run(init = world,
     draw_every = 1,
-    delay = 0.5,
-    gen = 20)
+    delay = 0.3,
+    gen = 100)
