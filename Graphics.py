@@ -17,7 +17,7 @@ class Graphics:
         self.canvas.setBackground(*self.backgroundFill)
         self.win.setTitle("Game of Life")
 
-    def draw(self, world, ev):
+    def draw(self, world, ev = ""):
         self.win.setTitle("Game of Life " + str(ev))
         self.canvas.clear()
         self.canvas.setOutline(*self.backgroundFill)
