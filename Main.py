@@ -2,8 +2,8 @@ import random
 from Graphics import *
 from time import sleep
 
-row, column = 40, 40
-cell_width = 10
+row, column = 30, 30
+cell_width = 12
 
 ui = Graphics(row, column, cell_width, [5, 5, 5, 5])
 
@@ -19,24 +19,26 @@ def initialize(_row, _column, prob=0.2):
 
 
 def evolution(_world, _row, _column):
-    backup = _world.copy()
+    neg = []
     for i in range(_row):
+        _ = []
         for j in range(_column):
             lives = 0
             for id in range(i - 1, i + 2):
-                if id < 0 or id > _row - 1:
-                    continue
                 for jd in range(j - 1, j + 2):
-                    if jd < 0 or jd > _column - 1:
-                        continue
-                    if backup[id][jd] == 1:
+                    if _world[0 if id == _row else id][0 if jd == _column else jd] == 1:
                         lives += 1
-
-            if backup[i][j] == 1:
+            if _world[i][j] == 1:
                 lives -= 1
-            if backup[i][j] == 1 and (lives == 2 or lives == 3):
+
+            _.append(lives)
+        neg.append(_)
+
+    for i in range(_row):
+        for j in range(_column):
+            if _world[i][j] == 1 and (neg[i][j] == 2 or neg[i][j] == 3):
                 _world[i][j] = 1
-            elif backup[i][j] == 0 and lives == 3:
+            elif _world[i][j] == 0 and neg[i][j] == 3:
                 _world[i][j] = 1
             else:
                 _world[i][j] = 0
@@ -44,7 +46,7 @@ def evolution(_world, _row, _column):
 
 
 def run(draw_every=1, delay=0.1):
-    world = initialize(row, column, 0.5)
+    world = initialize(row, column, 0.1)
     ui.draw(world, 1)
     for ev in range(1, 100):
         world = evolution(world, row, column)
