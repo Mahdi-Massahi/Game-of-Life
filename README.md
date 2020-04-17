@@ -1,6 +1,9 @@
 # Game-of-Life
 A visual game-of-life on python.
 
+# Screenshot
+![screenshot](https://github.com/Mahdi-Massahi/Game-of-Life/blob/master/Screenshot.png)
+
 # Requirements
 EzGraphics v2.1
 
