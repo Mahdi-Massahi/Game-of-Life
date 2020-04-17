@@ -3,13 +3,14 @@ from ezgraphics import *
 
 class Graphics:
 
-    def __init__(self, row, col, box_width, margin):
-        self.width = box_width*row + margin[1] + margin[3]
-        self.height = box_width*col + margin[0] + margin[2]
+    def __init__(self, row, col, box_width):
+
+        self.margin = [5, 5, 5, 5]
+        self.width = box_width*row + self.margin[1] + self.margin[3]
+        self.height = box_width*col + self.margin[0] + self.margin[2]
         self.row = row
         self.col = col
         self.box_width = box_width
-        self.margin = margin
         self.win = GraphicsWindow(self.width, self.height)
         self.backgroundFill = [80, 80, 80]
         self.cellFill = [100, 150, 150]

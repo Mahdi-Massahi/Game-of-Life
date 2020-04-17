@@ -2,12 +2,6 @@ import random
 from Graphics import *
 from time import sleep
 
-row, column = 30, 30
-cell_width = 12
-
-ui = Graphics(row, column, cell_width, [5, 5, 5, 5])
-
-
 def initialize(_row, _column, prob=0.2):
     _world = []
     for i in range(_row):
@@ -45,11 +39,12 @@ def evolution(_world, _row, _column):
     return _world
 
 
-def run(draw_every=1, delay=0.1):
-    world = initialize(row, column, 0.1)
+def run(draw_every=1, delay=0.1, prob=0.2):
+    world = initialize(row, column, prob)
     ui.draw(world, 1)
-    for ev in range(1, 100):
+    for ev in range(1, 500):
         world = evolution(world, row, column)
+        print("\rEvolution:\t", ev, sep = "", end = "")
         if ev % draw_every == 0:
             sleep(delay)
             ui.draw(world, ev)
@@ -57,4 +52,7 @@ def run(draw_every=1, delay=0.1):
     ui.wait()
 
 
-run(1, 0.5)
+row, column = 150, 150
+cell_width = 4
+ui = Graphics(row, column, cell_width)
+run(50, 0.2, 0.2)
