@@ -8,12 +8,12 @@ cell_width = 10
 ui = Graphics(row, column, cell_width, [5, 5, 5, 5])
 
 
-def initialize(_row, _column):
+def initialize(_row, _column, prob = 0.2):
     _world = []
     for i in range(_row):
         _ = []
         for j in range(_column):
-            _.append(random.randint(0, 1))
+            _.append(1 if random.randint(0, 100)/100 < prob else 0)
         _world.append(_)
     return _world
 
@@ -45,7 +45,7 @@ def evolution(_world):
 
 
 def run(draw_every = 1, delay = 0.1):
-    world = initialize(row, column)
+    world = initialize(row, column, 0.1)
     ui.draw(world, 1)
 
     for ev in range(0, 100):
