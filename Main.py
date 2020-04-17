@@ -1,8 +1,9 @@
 import random
-from GraphicsGOL import *
+from Graphics import *
+from time import sleep
 
-row, column = 20, 20
-cell_width = 25
+row, column = 40, 40
+cell_width = 10
 
 ui = Graphics(row, column, cell_width, [5, 5, 5, 5])
 
@@ -43,10 +44,18 @@ def evolution(_world):
     return _world
 
 
-world = initialize(row, column)
-ui.draw(world)
+def run(draw_every = 1, delay = 0.1):
+    world = initialize(row, column)
+    ui.draw(world, 1)
 
-world = evolution(world)
-ui.draw(world)
+    for ev in range(0, 100):
+        world = evolution(world)
+        if ev % draw_every == 0:
+            sleep(delay)
+            ui.draw(world, ev)
 
-ui.wait()
+    ui.wait()
+
+
+run(1, 0.1)
+
